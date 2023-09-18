@@ -37,7 +37,7 @@ describe("Film booking tests", () => {
     expect(actual).toContain("Вы выбрали билеты:");
   }, 90000);
 
-  test("Should wo tickets be booked", async () => {
+  test("Should two tickets be booked", async () => {
     await getDays(page, 4); //выбираем дату
     await getMovieTime(page, 1, 2); //выбираем время
     await page.waitForSelector("h1");
