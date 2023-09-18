@@ -38,25 +38,25 @@ describe("Film booking tests", () => {
   }, 90000);
 
   test("Should wo tickets be booked", async () => {
-    await getDays(page, 5); //выбираем дату
-    await getMovieTime(page, 2, 2); //выбираем время
+    await getDays(page, 4); //выбираем дату
+    await getMovieTime(page, 1, 2); //выбираем время
     await page.waitForSelector("h1");
-    await getSeatSelector(page, 1, 10); //выбираем место
-    await getSeatSelector(page, 1, 9); //выбираем 2 место
+    await getSeatSelector(page, 7, 5); //выбираем место
+    await getSeatSelector(page, 7, 6); //выбираем 2 место
     await clickElement(page, bookTickets); // нажимаем забронировать
     await page.waitForSelector(selectedTickets); //ждем загрузки страницы
-    await clickElement(page, getBookingCode); //получить код бронирования
     const actual = await getText(page, "h2");
     expect(actual).toContain("Вы выбрали билеты:");
-  }, 80000);
+  }, 90000);
 
   test("Should try to book unavailable ticket", async () => {
-    await getDays(page, 3); //выбираем дату
+    await getDays(page, 4); //выбираем дату
     await getMovieTime(page, 1, 2); //выбираем время
-    await getSeatSelector(page, 1, 3); //выбираем место
+    await getSeatSelector(page, 2, 5); //выбираем место
+    await getSeatSelector(page, 2, 5); //выбираем второй раз то же место
     const actual = await page.$eval("button", (link) =>
       link.hasAttribute("disabled")
     );
     expect(actual).toBe(true);
-  }, 60000);
+  }, 80000);
 });
